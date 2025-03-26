@@ -1,0 +1,283 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.dashboard-container {
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 200px;
+    background-color: #e9ecef;
+}
+
+.sidebar .nav-link {
+    color: #6c5ce7;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: white
+}
+
+/* Active state */
+.sidebar .nav-link.active {
+    background-color: #6c5ce7;  /* Purple background */
+    color: white;  /* White text for active state */
+}
+
+.sidebar .nav-link.active {
+    background-color: #6c5ce7;
+    color: white;
+}
+
+/* Hover state */
+.sidebar .nav-link:hover:not(.active) {
+    background-color: #6c5ce7;  /* Purple background on hover */
+    color: white;  /* White text on hover */
+}
+
+.sidebar .nav-link i {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+/* Icon color */
+.sidebar .nav-link i {
+    color: #6c5ce7;  /* Purple icon color */
+}
+
+/* Icon color for active and hover states */
+.sidebar .nav-link.active i,
+.sidebar .nav-link:hover i {
+    color: white;  /* White icon color */
+}
+
+/* Main Content Styles */
+.main-content {
+    background-color: #f8f9fa;
+    padding: 0 !important;
+}
+
+/* Header Styles */
+.page-header {
+    background-color: #e9ecef;
+    padding: 20px 30px;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+/* Application Cards Container */
+.applications-list {
+    padding: 0 30px;
+    height: calc(100vh - 120px);
+}
+
+/* Points List Styles */
+.points-list .card {
+    background-color: #e9ecef;
+    border: 1px solid #928989;
+    border-radius: 12px;  /* Increased border radius */
+    margin-bottom: 25px;  
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-body {
+    padding: 40px 45px;  
+}
+
+.app-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.app-details {
+    margin-left: 25px;
+}
+
+.app-details h5 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+
+.view-detail {
+    color: #6c5ce7;
+    font-size: 13px;
+}
+
+.points-badge {
+    background-color: #a8e6cf;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* css for the profile  */
+
+.profile-section {
+    padding: 0 30px;
+}
+
+.profile-card {
+    background-color: #e9ecef;
+    border: 1px solid #928989;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 25px;
+}
+
+.profile-header {
+    border-bottom: 2px solid #6c5ce7;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 60px;
+    background-color: #6c5ce7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture i {
+    font-size: 48px;
+    color: white;
+}
+
+.profile-detail {
+    margin-bottom: 15px;
+}
+
+.profile-detail label {
+    font-weight: 600;
+    color: #6c5ce7;
+    margin-bottom: 5px;
+}
+
+.profile-detail p {
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 0;
+}
+
+.points-summary {
+    background-color: #98f5e1;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+
+
+
+#drop-area.drag-over {
+    background-color: rgba(0, 0, 0, 0.1);  /* Visual feedback when dragging */
+}
+
+
+#drop-area {
+    border: 2px dashed #007bff;
+    background-color: #f7f7f7;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#drop-area.drag-over {
+    background-color: #e1f5fe;
+    border-color: #0288d1;
+}
+
+#drop-area p {
+    color: #007bff;
+    font-size: 18px;
+}
+
+#screenshot-input, #submit-screenshot {
+    margin-top: 15px;
+}
+
+.task-breadcrumb a {
+    font-size: 14px;
+    color: #666;
+}
+
+.task-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.task-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.app-logo {
+    width: 50px;
+    height: 50px;
+    background-color: #0077b5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.app-url {
+    color: #666;
+    font-size: 14px;
+}
+
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.upload-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.upload-text {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}

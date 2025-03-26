@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Points</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+    <div class="dashboard-container d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar p-3">
+            <ul class="nav flex-column mt-4">
+                <li class="nav-item">
+                    <a href="/userapp/dashboard/" class="nav-link active d-flex align-items-center">
+                        <i class="bi bi-house-door me-2"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/userapp/profile/" class="nav-link d-flex align-items-center">
+                        <i class="bi bi-person me-2"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/userapp/points/" class="nav-link d-flex align-items-center">
+                        <i class="bi bi-star me-2"></i>
+                        <span>Points</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/userapp/task/list" class="nav-link d-flex align-items-center">
+                        <i class="bi bi-list-task me-2"></i>
+                        <span>Task</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center" id="logout-link">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content flex-grow-1">
+            <!-- Page Header -->
+            <div class="page-header text-center">
+                <h1><b>Hello, <span id="username"></span></b></h1>
+            </div>
+
+            <!-- Points List -->
+            <div class="points-list" style="overflow-y: auto;">
+        
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const usernameElement = document.getElementById("username");
+            const pointsListContainer = document.querySelector(".points-list");
+            const logoutLink = document.getElementById("logout-link");
+        
+            // Utility function for API requests
+            const fetchData = async (url, method = 'GET', headers = {}, body = null) => {
+                const response = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...headers,
+                    },
+                    body: body ? JSON.stringify(body) : null,
+                });
+                if (response.status === 401) {
+                    alert("Session expired. Please log in again.");
+                    window.location.href = '/userapp/login/';
+                    return null;
+                }
+                return await response.json();
+            };
+        
+            // Display username on the points page
+            const displayUsername = async () => {
+                const token = localStorage.getItem('access_token');
+                if (!token) {
+                    alert("You need to log in first.");
+                    window.location.href = '/userapp/login/';
+                } else {
+                    const userData = await fetchData('/userapp/api/points/', 'GET', { 'Authorization': `Bearer ${token}` });
+                    if (userData) {
+                        usernameElement.innerText = userData.username;
+                    }
+                }
+            };
+        
+            // Fetch and display user points
+            function fetchUserPoints() {
+                fetch("/userapp/api/points/", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("Failed to fetch user points");
+                    }
+                })
+                .then(data => {
+                    pointsListContainer.innerHTML = ""; // Clear previous content
+        
+                    if (data.points > 0) {
+                        // Display points card
+                        const pointsCard = `
+                            <div class="card mb-3">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">"Congratulations! You have earned ${data.points} points."</h5>
+                                    <a href="/userapp/dashboard" class="btn btn-primary">
+                                       Earn more points
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                        pointsListContainer.innerHTML = pointsCard;
+                    } else {
+                        // Display no points message
+                        const noPointsCard = `
+                            <div class="card mb-3">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">No points earned yet!</h5>
+                                <a href="/userapp/dashboard" class="btn btn-primary">
+                                    Start Earning Points Now
+                                </a>
+
+                                    
+                                </div>
+                            </div>
+                        `;
+                        pointsListContainer.innerHTML = noPointsCard;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            }
+        
+            // Frontend-only logout
+            const logoutUser = () => {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('refresh_token');
+                alert("You have successfully logged out.");
+                window.location.href = '/userapp/login/';
+            };
+        
+            // Attach logout event
+            logoutLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                logoutUser();
+            });
+        
+            // Initialize the page
+            displayUsername();
+            fetchUserPoints();
+        });
+        
+        
+    </script>
+</body>
+</html>
